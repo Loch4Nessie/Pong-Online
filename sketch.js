@@ -2,24 +2,30 @@ let socket;
 let xSize = 1280;
 let ySize = 720;
 
+let Player1;
 
 function setup() {
 	createCanvas(xSize, ySize);	
-	socket = io.connect();
+//	socket = io.connect();
 }
 
 
 function draw() {
-	background(50);
+  background("black");
+  
+  Player1 = new player1();
+  Player1.display();
+  Player1.move();
+  
 }
 
 class player1 {
 	constructor() {
-		this.xPos = x;
-		this.yPos = y;
-		this.width = wdth;
-		this.height = hght;
-		this.speed = speed;
+		this.xPos = 50;
+		this.yPos = 100;
+		this.width = 20;
+		this.height = 60;
+		this.speed = 10;
 	}
 
 	display() {
@@ -29,12 +35,23 @@ class player1 {
 	}
 
 	move() {
-		if(keyIsDown(38)) {
+		if(keyIsDown(38) && this.yPos > 0) {
 			this.yPos -= this.speed;
 		}
 
-		if(keyIsDown(40)) {
+		if(keyIsDown(40) && this.yPos < ySize) {
 			this.yPos += this.speed;
 		}
 	}
 }
+
+let player2Data = {
+  y: player1.yPos
+}
+socket.emit('player2Data', player2Data);
+
+
+
+
+
+
