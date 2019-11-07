@@ -6,7 +6,7 @@ var server = app.listen(4000); //Zorgt er voor dat de server op port 4000 gaat r
 
 app.use(express.static('public')); //runt elke file die in de public directory staan
 
-console.log("Server is running");
+console.log("The server is running!");
 
 var socket = require('socket.io');
 
@@ -14,10 +14,8 @@ var io = socket(server);
 
 io.on('connection', function(socket){
 	console.log('new connection: ' + socket.id);
-	socket.emit('msg', 123)
 
-	socket.on('mouse', function(data){
-		socket.broadcast.emit('mouse', data);
-		//console.log(data);
+	socket.on('player2Data', function(player2Data){
+		socket.broadcast.emit('player2Data', player2Data);
 	})
 });
