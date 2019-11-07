@@ -7,8 +7,15 @@ let Player1;
 function setup() {
 	createCanvas(xSize, ySize);	
 //	socket = io.connect();
+    socket.on('player2Data', player2);
 }
 
+function player2(player2Data) {
+  noStroke();
+  fill("blue");
+  rect(1230, player2Data.y, 20, 60);
+
+}
 
 function draw() {
   background("black");
