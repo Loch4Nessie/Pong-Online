@@ -1,31 +1,40 @@
-var socket;
+let socket;
+let xSize = 1280;
+let ySize = 720;
+
 
 function setup() {
-	createCanvas(600,400);
-	background("black")
-
+	createCanvas(xSize, ySize);	
 	socket = io.connect();
-	socket.on('msg', function(getal){
-		console.log(getal)
-	})
-	socket.on('mouse', newDrawing);
 }
 
-function newDrawing(data) {
-	noStroke();
-	fill("red");
-	ellipse(data.x, data.y, 30, 30);
+
+function draw() {
+	background(50);
 }
 
-function mouseDragged() {
-	console.log('sending:' + mouseX + ',' + mouseY);
-	var data = {
-		x: mouseX,
-		y: mouseY
+class player1 {
+	constructor() {
+		this.xPos = x;
+		this.yPos = y;
+		this.width = wdth;
+		this.height = hght;
+		this.speed = speed;
 	}
-	socket.emit('mouse', data);
 
-	noStroke();
-	fill("white");
-	ellipse(mouseX, mouseY, 30, 30);
+	display() {
+		noStroke();
+		fill("red");
+		rect(this.xPos, this.yPos, this.width, this.height);
+	}
+
+	move() {
+		if(keyIsDown(38)) {
+			this.yPos -= this.speed;
+		}
+
+		if(keyIsDown(40)) {
+			this.yPos += this.speed;
+		}
+	}
 }
