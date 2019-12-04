@@ -10,11 +10,15 @@ console.log("Server is running");
 var socket = require('socket.io');
 var io = socket(server);
 
-io.on('connection', function(socket){
+
+io.sockets.on('connection', newConnection);
+
+function newConnection(socket) {
 	console.log('new connection: ' + socket.id);
 
-	socket.on('p1yPos', function(p1yData){
-		
-		socket.broadcast.emit('p1yPos', p1yData);
-	});
-});
+	socket.on('yPos', yMsg);
+
+	function yMsg(yData) {
+		socket.broadcast.emit('yPos', yData);
+	}
+}
