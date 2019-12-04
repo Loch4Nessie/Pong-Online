@@ -1,4 +1,4 @@
-let socket = io();
+let socket;
 let xSize = 1280;
 let ySize = 720;
 let Player1;
@@ -12,8 +12,16 @@ let startGame = false;
 function setup() {
 	createCanvas(xSize, ySize);
 	socket = io.connect();
-
+	socket.on('yPos', drawPlayer2);
 }
+
+function drawPlayer2(yData) {
+	console.log(yData);
+	noStroke();
+	fill("white");
+	rect(xSize - 100, yData.y, 20, 140);
+}
+
 
 function draw() {
 	background(1, 100, );
@@ -33,16 +41,10 @@ function draw() {
 		Ball.display();
 		Ball.move();
 
-		let p1yData = {
+		let yData = {
 			y: Player1.yPos
 		}
-		socket.emit('p1yPos', p1yData)
-
-		socket.on('p1yPos', function(p1yData){
-			noStroke();
-			fill("white");
-			rect(xSize-120, p1yData.y, 20, 140);
-		});
+		socket.emit('yPos', yData);
 
 	}
 }
